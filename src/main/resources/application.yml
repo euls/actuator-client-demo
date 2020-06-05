@@ -1,0 +1,33 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: redrcd-actuator-client
+  boot:
+    admin:
+      client:
+        url: "http://127.0.0.1:8084"
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    preferIpAddress: true
+    health-check-url: http://127.0.0.1:8086/actuator/health
+    lease-expiration-duration-in-seconds: 5
+    lease-renewal-interval-in-seconds: 5
+    ip-address: 127.0.0.1
+  client:
+    healthcheck: true
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
